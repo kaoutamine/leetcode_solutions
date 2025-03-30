@@ -40,5 +40,23 @@ class Solution:
 """I'm a fucking twat, it's an arithmetic equation that should be solved
 It then becomes linear time because I'm looking at each element"""
 
+class Solution:
+    def getLargestOutlier(self, nums: List[int]) -> int:
+        total = sum(nums)
+        count = Counter(nums)
+        max_outlier = None
+
+        for num in nums:
+            # Assume num is num1 and look for matching num2
+            num2 = total - 2 * num
+            if num2 in count:
+                if num2 == num and count[num] < 2:
+                    continue  # can't pair the number with itself unless it appears twice
+                candidate = max(num, num2)
+                if max_outlier is None or candidate > max_outlier:
+                    max_outlier = candidate
+
+        return max_outlier if max_outlier is not None else -1
+
 
         
