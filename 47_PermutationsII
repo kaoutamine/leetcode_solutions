@@ -1,0 +1,31 @@
+class Solution:
+    def permuteUnique(self, nums: List[int]) -> List[List[int]]:
+        sol, output = [], []
+        numToCount = Counter(nums)
+        n = len(nums)
+
+        def backtrack(curr):
+            if len(curr) == len(nums):
+                output.append(curr[:])
+            
+            #I made the mistake here of using nums instead of numToCount
+            #that's actually a huge mistake because then you'd start with
+            #the duplicate multiple times!! which also explains what I did
+            #not understand previously...
+            for num in numToCount:
+                if numToCount[num] > 0:
+                    numToCount[num] -= 1
+                    curr.append(num)
+                    backtrack(curr)
+                    curr.pop()
+                    numToCount[num] += 1
+        
+        backtrack([])
+
+        return output
+
+                
+
+
+        
+        
