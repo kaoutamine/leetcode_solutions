@@ -1,0 +1,29 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def maxPathSum(self, root: Optional[TreeNode]) -> int:
+        output = [- math.inf]
+
+        def helper(node):
+            if not node:
+                return 0
+            val_left = helper(node.left)
+            val_right = helper(node.right)
+            max_left = max(val_left, 0)
+            max_right = max(val_right, 0)
+
+            #calculate max value of splitting with left and right
+            split = max_left + max_right + node.val
+            output[0] = max(output[0], split)
+
+            #output max value of choosing one of the bottom branches
+            return max(max_left, max_right) + node.val
+        
+        helper(root)
+        return output[0]
+
+        
