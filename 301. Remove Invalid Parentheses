@@ -1,0 +1,40 @@
+class Solution:
+    def removeInvalidParentheses(self, s: str) -> List[str]:
+        output = set()
+        queue = collections.deque()
+        queue.append(s)
+        visited = set()
+        found = False 
+        def isValid(s):
+            count = 0
+            for char in s:
+                if char == "(":
+                    count += 1
+                elif char == ")":
+                    count -=1 
+                    if count < 0:
+                        return False
+            
+            return count == 0
+        
+        while queue:
+            s = queue.popleft()
+            if isValid(s):
+                output.add(s)
+                found = True
+            elif found:
+                continue
+            else:
+                for i in range(len(s)):
+                    if s[i] in ["(", ")"]:
+                        new_str = s[:i] + s[i + 1:]
+                        if new_str not in visited:
+                            visited.add(new_str)
+                            queue.append(new_str)
+                
+        return list(output)
+        
+        
+
+
+
