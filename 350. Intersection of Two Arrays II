@@ -1,0 +1,11 @@
+class Solution:
+    def intersect(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        hash1 = Counter(nums1)
+        hash2 = Counter(nums2)
+        output = []
+
+        for num in hash1:
+            if num in hash2:
+                for i in range(min(hash2[num], hash1[num])):
+                    output.append(num)
+        return output
